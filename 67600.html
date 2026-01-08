@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulir Pendaftaran</title>
+
+<style>
+body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:#f4f4f4;
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.container{
+    background:#fff;
+    width:100%;
+    max-width:600px;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 0 20px rgba(0,0,0,.1);
+}
+h1{
+    text-align:center;
+    letter-spacing:2px;
+    margin-bottom:20px;
+}
+label{
+    font-weight:600;
+    margin-top:14px;
+    display:block;
+}
+input, select, textarea{
+    width:100%;
+    padding:10px;
+    margin-top:6px;
+    border-radius:6px;
+    border:1px solid #ccc;
+}
+button{
+    width:100%;
+    margin-top:22px;
+    padding:12px;
+    background:#007bff;
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    font-size:16px;
+    cursor:pointer;
+}
+button:hover{background:#0056b3}
+.note{
+    text-align:center;
+    font-size:13px;
+    margin-top:10px;
+    color:#555;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+<h1>Pendaftaran</h1>
+
+<form id="formDaftar" enctype="multipart/form-data">
+
+<label>Nama Lengkap</label>
+<input type="text" name="nama" required>
+
+<label>NIK</label>
+<input type="text" name="nik" required>
+
+<label>Tempat Lahir</label>
+<input type="text" name="tempat_lahir" required>
+
+<label>Tanggal Lahir</label>
+<input type="date" name="tanggal_lahir" required>
+
+<label>Jenis Kelamin</label>
+<select name="jk" required>
+<option value="">-- Pilih --</option>
+<option>Laki-laki</option>
+<option>Perempuan</option>
+</select>
+
+<label>Alamat Singkat</label>
+<textarea name="alamat" rows="3" required></textarea>
+
+<label>Nama Orang Tua / Wali</label>
+<input type="text" name="wali" required>
+
+<label>No WhatsApp</label>
+<input type="text" name="wa" placeholder="628xxxx" required>
+
+<!-- FILE DI AKHIR -->
+<label>Upload Foto Diri (Wajib)</label>
+<input type="file" name="foto" accept="image/*" required>
+
+<label>Upload Kartu Keluarga (KK)</label>
+<input type="file" name="kk" accept="image/*,application/pdf" required>
+
+<button type="submit">Kirim Pendaftaran</button>
+</form>
+
+<div class="note">Pastikan data dan file benar</div>
+</div>
+
+<script>
+const scriptURL="https://script.google.com/macros/s/AKfycbxVwjokP2i8YoXix_ur5G9i6G6Wfboit9msWIh5LpKTWfwGei1bzL6fmQimwkQyxP6_Jw/exec";
+
+document.getElementById("formDaftar").addEventListener("submit", e=>{
+  e.preventDefault();
+  fetch(scriptURL,{
+    method:"POST",
+    body:new FormData(e.target)
+  })
+  .then(res=>res.text())
+  .then(msg=>{
+    alert(msg);
+    if(msg.includes("BERHASIL")) e.target.reset();
+  })
+  .catch(()=>alert("Gagal mengirim data"));
+});
+</script>
+</body>
+</html>
